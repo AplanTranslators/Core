@@ -883,7 +883,7 @@ class DeclarationArray(BasicArray):
         if length == 0:
             logger.env("\t\t\tNil")
             return
-        
+
         last = length - 1
         for index in range(length):
             element = self.elements[index]
