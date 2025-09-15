@@ -38,9 +38,7 @@ class ToolCLI:
             help="Translate a single file.",
             description="Translate a single source file to the target model.",
         )
-        start_parser.add_argument(
-            "fpath", type=Path, help="Path to the source file."
-        )
+        start_parser.add_argument("fpath", type=Path, help="Path to the source file.")
         start_parser.add_argument(
             "-rpath",
             "--result-path",
