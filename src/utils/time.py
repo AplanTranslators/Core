@@ -6,7 +6,7 @@ class TimeUtils(metaclass=SingletonMeta):
     def __init__(self):
         pass
 
-    def format_time_m_s(self, input_time):
+    def formatTime_m_s(self, input_time):
         minutes = input_time // 60
         input_time %= 60
 
@@ -15,8 +15,8 @@ class TimeUtils(metaclass=SingletonMeta):
         else:
             return f"{int(input_time)} s"
 
-    def format_time_date_h_m_s(self, input_time):
+    def formatTimeDate_h_m_s(self, input_time):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(input_time))
 
-    def format_time_h_m_s(self, input_time):
+    def formatTime_h_m_s(self, input_time):
         return time.strftime("%H:%M:%S", time.localtime(input_time))

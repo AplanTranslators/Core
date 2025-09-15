@@ -34,28 +34,28 @@ def test_singleton_meta_behavior():
 # --------------------------
 def test_format_time_m_s():
     """
-    Test that format_time_m_s correctly formats seconds into 'm s' format.
+    Test that formatTime_m_s correctly formats seconds into 'm s' format.
     Should handle various cases including zero, single minute, and large values
     """
     # Create an instance of TimeUtils
     tu = TimeUtils()
-    assert tu.format_time_m_s(75) == "1 m 15 s"
-    assert tu.format_time_m_s(59) == "59 s"
-    assert tu.format_time_m_s(120) == "2 m 0 s"
-    assert tu.format_time_m_s(3599) == "59 m 59 s"
-    assert tu.format_time_m_s(3600) == "60 m 0 s", "Large value should handle hours"
-    assert tu.format_time_m_s(0) == "0 s", "Zero should be '0 s'"
+    assert tu.formatTime_m_s(75) == "1 m 15 s"
+    assert tu.formatTime_m_s(59) == "59 s"
+    assert tu.formatTime_m_s(120) == "2 m 0 s"
+    assert tu.formatTime_m_s(3599) == "59 m 59 s"
+    assert tu.formatTime_m_s(3600) == "60 m 0 s", "Large value should handle hours"
+    assert tu.formatTime_m_s(0) == "0 s", "Zero should be '0 s'"
 
 
 def test_format_time_date_h_m_s(mocker):
     """
-    Test that format_time_date_h_m_s correctly formats a timestamp into 'YYYY-MM-DD HH:MM:SS' format.
+    Test that formatTimeDate_h_m_s correctly formats a timestamp into 'YYYY-MM-DD HH:MM:SS' format.
     Should handle various timestamps and ensure the format is consistent
     """
     tu = TimeUtils()
     ts = 1672531200  # 2023-01-01 00:00:00 UTC
     mocker.patch("time.localtime", return_value=pytime.gmtime(ts))
-    formatted = tu.format_time_date_h_m_s(ts)
+    formatted = tu.formatTimeDate_h_m_s(ts)
     assert len(formatted) == 19
     assert formatted.count(":") == 2
     assert formatted.count("-") == 2
@@ -64,12 +64,12 @@ def test_format_time_date_h_m_s(mocker):
 
 def test_format_time_h_m_s():
     """
-    Test that format_time_h_m_s correctly formats a timestamp into 'HH:MM:SS' format.
+    Test that formatTime_h_m_s correctly formats a timestamp into 'HH:MM:SS' format.
     The output depends on local timezone, so only check the format.
     """
     tu = TimeUtils()
     ts = 1672531200  # 2023-01-01 00:00:00 UTC
-    formatted = tu.format_time_h_m_s(ts)
+    formatted = tu.formatTime_h_m_s(ts)
     assert len(formatted) == 8
     assert formatted.count(":") == 2
 

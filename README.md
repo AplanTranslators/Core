@@ -38,7 +38,7 @@ Requires a json file with example data used for the test.
     if __name__ == "__main__":
         tool = BaseTool() # Create Base tool object
         tool.setType("sv") # Set the testing file type
-        tool.tests_start("path to json file with examples data")
+        tool.testsStart("path to json file with examples data")
 ```
 
 
@@ -50,14 +50,14 @@ For this tool you can have the same example file as for the Testing tool or run 
     if __name__ == "__main__":
         tool = BaseTool() # Create Base tool object
         tool.setType("sv") # Set the regeneration file type
-        tool.regeneration_start(examples_list_path = "path to json file with examples data", )
+        tool.regenerationStart(examples_list_path = "path to json file with examples data", )
 ```
 
 ```python
     if __name__ == "__main__":
         tool = BaseTool() # Create Base tool object
         tool.setType("sv") # Set the regeneration file type
-        tool.regeneration_start(path_to_sv = "path to exampe file")
+        tool.regenerationStart(path_to_sv = "path to exampe file")
 ```
 
 ### Code Quality and Standards
