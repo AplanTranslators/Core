@@ -121,7 +121,6 @@ def test_doubleOperators2Aplan(sf):
     Test doubleOperators2Aplan method.
     Ensure it converts double operators like "++" and "--" to their corresponding assignment operations.
     """
-    print(sf.doubleOperators2Aplan("x++"))
     assert sf.doubleOperators2Aplan("x++") == "x = x + 1"
     assert sf.doubleOperators2Aplan("x--") == "x = x - 1"
     assert sf.doubleOperators2Aplan("c++; d--") == "c = c + 1; d = d - 1"

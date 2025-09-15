@@ -19,38 +19,29 @@ class Program(metaclass=SingletonMeta):
 
     def __init__(self, result_path: Path | None = None) -> None:
 
-        self.design_units: DesignUnitArray = DesignUnitArray()
-        self.DesignUnit: DesignUnitCallArray = DesignUnitCallArray()
+        self._design_units: DesignUnitArray = DesignUnitArray()
+        self._design_units_calls: DesignUnitCallArray = DesignUnitCallArray()
         self._typedefs: TypedefArray = TypedefArray()
 
         self.logger: Logger = Logger(self.__class__.__qualname__)
         self.aplan_logger = AplanLogger(result_path)
+        self.file_path: Path | None = None
 
     @property
     def result_path(self) -> Path:
         return self.aplan_logger.result_path
 
     @property
+    def design_units(self) -> DesignUnitArray:
+        return self._design_units
+
+    @property
     def design_units_calls(self) -> DesignUnitCallArray:
-        return self.DesignUnit
+        return self._design_units_calls
 
     @property
     def typedefs(self) -> TypedefArray:
         return self._typedefs
-
-    def readFileData(self, path):
-        self.file_path = path
-        self.logger.delimetr(color="blue", text=f"Read file {path}")
-
-        f = open(path, "r")
-        data = f.read()
-        f.close()
-        return data
-
-    def write_to_file(self, path, data):
-        f = open(path, "w")
-        f.write(data)
-        f.close()
 
     def generateAplan(self):
         generateEvt(self)

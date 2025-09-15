@@ -1,3 +1,4 @@
+from ..logger.logger import AplanLogger
 from .parametrs import ParametrArray
 from .processed import ProcessedElementArray
 from .actions import ActionArray
@@ -619,6 +620,13 @@ class DesignUnit(Basic):
 
         return final_result
 
+    def logAgentsTypes2Aplan(self, logger: AplanLogger):
+        if self.element_type == ElementsTypes.OBJECT_ELEMENT:
+            return
+        logger.env("\t\t{0} : obj (".format(self.ident_uniq_name_upper))
+        self.declarations.logAgentsTypes2Aplan(logger)
+        logger.env("\t\t),")
+
     def __repr__(self) -> str:
         """
         Returns a developer-friendly string representation of the `DesignUnit` object,
@@ -772,6 +780,21 @@ class DesignUnitArray(BasicArray):
 
             result.addElement(element)  # Add the element if it passes all filters
         return result
+
+    def logAgentsTypes2Aplan(self, logger: AplanLogger):
+        for design_unit in self.elements:
+            design_unit.logAgentsTypes2Aplan(logger)
+
+    def logAgentsObjs2Aplan(self, logger: AplanLogger):
+        for design_unit in self.getElementsIE(
+            exclude=ElementsTypes.CLASS_ELEMENT
+        ).getElements():
+            logger.env(
+                "\t\t{0} : obj ({1}),".format(
+                    design_unit.ident_uniq_name_upper,
+                    design_unit.ident_uniq_name,
+                )
+            )
 
     def __repr__(self) -> str:
         """

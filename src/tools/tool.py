@@ -40,7 +40,7 @@ class BaseTool:
     def __init__(self, name: str = "Tool"):
         self.name = name
         self.logger: Logger = Logger(self.__class__.__qualname__)
-        self.translation_mngr = BaseTranslationManager()
+        self._translation_mngr: BaseTranslationManager | None = None
         self.file_manager = FilesMngr()
         self.time_utils = TimeUtils()
         self._type = None
@@ -48,6 +48,10 @@ class BaseTool:
     def setType(self, i_type: str):
         """Sets the type for the translator."""
         self._type = i_type
+
+    def setTranslationMngr(self, i_translator: BaseTranslationManager):
+        """Sets the type for the translator."""
+        self._translation_mngr = i_translator
 
     def _logTimeSummary(
         self, start_time: float, process_name: str, is_start_log: bool = False
@@ -85,6 +89,10 @@ class BaseTool:
             self.logger.error("Select a type for the translator.")
             return True
 
+        if not self._translation_mngr:
+            self.logger.error("Select a translation manager.")
+            return True
+
         self.logger.delimetr(
             text=f"{self.name.upper()} START", color=self.LOG_DELIMITER_MAIN
         )
@@ -96,8 +104,8 @@ class BaseTool:
 
             self.file_manager.isTestingFile(source_path, self._type.lower())
 
-            self.translation_mngr.setup(source_path)
-            self.translation_mngr.translate()
+            self._translation_mngr.setup(source_path)
+            self._translation_mngr.translate()
             program.generateAplan()
 
             return False  # Успішне виконання

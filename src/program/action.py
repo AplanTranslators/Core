@@ -18,5 +18,4 @@ def create_Action_File(self: "Program"):
 
     self.aplan_logger.act(actions)
 
-    #    self.write_to_file(self.path_to_result + "project.act", actions)
     self.logger.info(".act file created \n", "purple")

@@ -1,6 +1,8 @@
 import re
 from typing import Optional, Tuple, List
 from enum import Enum, auto
+
+from ..logger.logger import AplanLogger
 from ..classes.actions import Action
 from ..classes.basic import Basic, BasicArray
 from ..classes.element_types import ElementsTypes
@@ -509,6 +511,9 @@ class Declaration(Basic):
         # If DeclTypes.NONE or other unhandled types, result will remain empty
         return result
 
+    def logAgentsTypes2Aplan(self, logger: AplanLogger):
+        logger.envPush("\t\t\t{0}:{1}".format(self.getName(), self.getAplanDecltype()))
+
     def __str__(self) -> str:
         """
         Returns a human-readable string representation of the Declaration object.
@@ -870,6 +875,24 @@ class DeclarationArray(BasicArray):
         if element is not None and element.dimension_size > 0:
             return element
         return None
+
+    def logAgentsTypes2Aplan(self, logger: AplanLogger):
+        decls = self.getElementsIE(data_type_exclude=DeclTypes.ENUM_TYPE)
+        element: Declaration = None
+        length = self.__len__()
+        if length == 0:
+            logger.env("\t\t\tNil")
+            return
+        
+        last = length - 1
+        for index in range(length):
+            element = self.elements[index]
+            if element.data_type is not DeclTypes.ENUM_TYPE:
+                element.logAgentsTypes2Aplan(logger)
+            if index < last:
+                logger.env(",")
+            elif index == last:
+                logger.env("")
 
     def __repr__(self) -> str:
         """
