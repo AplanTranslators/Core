@@ -14,7 +14,7 @@ def file_manager():
 # ---------------------------
 # Tests for isPathExist
 # ---------------------------
-class TestIsPassExist:
+class TestIsPathExist:
     def test_existingPath(self, file_manager: FilesMngr, tmp_path: Path):
         """
         Should pass when the file exists
@@ -150,102 +150,102 @@ class TestCompareAplanByPathes:
 
 
 # ---------------------------
-# Tests for remove_directory
+# Tests for removeDirectory
 # ---------------------------
 class TestRemoveDirectory:
     def test_existingDirectory(self, file_manager: FilesMngr, tmp_path: Path, caplog):
         """
-        Test that remove_directory removes an existing directory.
+        Test that removeDirectory removes an existing directory.
         Directory should be deleted if it exists
         """
         dir1: Path = tmp_path / "dir_to_remove"
         dir1.mkdir()
-        file_manager.remove_directory(dir1)
+        file_manager.removeDirectory(dir1)
         assert not dir1.exists()
         assert "has been removed" in caplog.text
 
     def test_missingDirectory(self, file_manager: FilesMngr, tmp_path: Path, caplog):
         """
-        Test that remove_directory does nothing for a non-existing directory.
+        Test that removeDirectory does nothing for a non-existing directory.
         If the directory does not exist, it should log a warning
         """
         dir1: Path = tmp_path / "non_existing"
-        file_manager.remove_directory(dir1)
+        file_manager.removeDirectory(dir1)
         assert "does not exist" in caplog.text
 
     def test_pathIsFile(self, file_manager: FilesMngr, tmp_path: Path, caplog):
         """
-        Test that remove_directory raises an error if the path is a file.
+        Test that removeDirectory raises an error if the path is a file.
         If the path is a file, it should log a warning and not delete anything
         """
         f: Path = tmp_path / "not_a_dir.txt"
         f.write_text("content")
-        file_manager.remove_directory(f)
+        file_manager.removeDirectory(f)
         assert "does not exist" in caplog.text
 
 
 # ---------------------------
-# Tests for load_examples_from_json
+# Tests for loadExamplesFromJson
 # ---------------------------
 class TestLoadExamplesFromJson:
     def test_validJson(self, file_manager: FilesMngr, tmp_path: Path):
         """
-        Test that load_examples_from_json loads a valid JSON file.
+        Test that loadExamplesFromJson loads a valid JSON file.
         Should return a list of dictionaries from a valid JSON file
         """
         data = [{"a": "1"}, {"b": "2"}]
         f: Path = tmp_path / "examples.json"
         f.write_text(json.dumps(data))
-        result = file_manager.load_examples_from_json(f)
+        result = file_manager.loadExamplesFromJson(f)
         assert result == data
 
     def test_fileNotFound(self, file_manager: FilesMngr, tmp_path: Path, caplog):
         """
-        Test that load_examples_from_json returns an empty list for a non-existing file.
+        Test that loadExamplesFromJson returns an empty list for a non-existing file.
         If the file does not exist, it should log a warning and return an empty list"""
         f: Path = tmp_path / "missing.json"
-        result = file_manager.load_examples_from_json(f)
+        result = file_manager.loadExamplesFromJson(f)
         assert result == []
         assert "not found" in caplog.text
 
     def test_invalidType(self, file_manager: FilesMngr, tmp_path: Path):
         """
-        Test that load_examples_from_json raises TypeError for invalid JSON format.
+        Test that loadExamplesFromJson raises TypeError for invalid JSON format.
         If the JSON file does not contain a list, it should raise a TypeError
         """
         f: Path = tmp_path / "invalid.json"
         f.write_text(json.dumps({"not": "a list"}))
         with pytest.raises(TypeError):
-            file_manager.load_examples_from_json(f)
+            file_manager.loadExamplesFromJson(f)
 
     def test_invalidJsonFormat(self, file_manager: FilesMngr, tmp_path: Path):
         """
-        Test that load_examples_from_json raises JSONDecodeError for invalid JSON.
+        Test that loadExamplesFromJson raises JSONDecodeError for invalid JSON.
         If the JSON file is not valid, it should raise a JSONDecodeError
         """
         f: Path = tmp_path / "broken.json"
         f.write_text("{not valid json")
         with pytest.raises(json.JSONDecodeError):
-            file_manager.load_examples_from_json(f)
+            file_manager.loadExamplesFromJson(f)
 
     def test_emptyJsonList(self, file_manager: FilesMngr, tmp_path: Path):
         """
-        Test that load_examples_from_json returns an empty list for an empty JSON array.
+        Test that loadExamplesFromJson returns an empty list for an empty JSON array.
         If the JSON file is an empty list, it should return an empty list
         """
         f: Path = tmp_path / "empty.json"
         f.write_text("[]")
-        result = file_manager.load_examples_from_json(f)
+        result = file_manager.loadExamplesFromJson(f)
         assert result == []
 
     def test_jsonListNotDicts(self, file_manager: FilesMngr, tmp_path: Path):
         """
-        Test that load_examples_from_json accepts a list of non-dict items.
+        Test that loadExamplesFromJson accepts a list of non-dict items.
         If the JSON file contains a list of non-dict items, it should still return them
         """
         f: Path = tmp_path / "not_dicts.json"
         f.write_text(json.dumps(["a", "b", "c"]))
-        result = file_manager.load_examples_from_json(f)
+        result = file_manager.loadExamplesFromJson(f)
         assert result == [
             "a",
             "b",

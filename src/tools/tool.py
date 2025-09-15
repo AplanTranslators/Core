@@ -214,7 +214,7 @@ class BaseTool:
             has_error = True
         finally:
             if operation_type == "TEST":
-                self.file_manager.remove_directory(result_path)
+                self.file_manager.removeDirectory(result_path)
 
             op_execution_time = time.time() - op_start_time
             self.logger.info(
@@ -253,7 +253,7 @@ class BaseTool:
         Уніфікована логіка для запуску тестів або генерації з файлу прикладів.
         Повертає 0, якщо все успішно, 1, якщо є помилки.
         """
-        all_examples = self.file_manager.load_examples_from_json(examples_list_path)
+        all_examples = self.file_manager.loadExamplesFromJson(examples_list_path)
         failed_items = []
 
         self.logger.delimetr(

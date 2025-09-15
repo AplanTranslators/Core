@@ -79,7 +79,7 @@ class FilesMngr(metaclass=SingletonMeta):
 
         return result
 
-    def remove_directory(self, directory_path: Path):
+    def removeDirectory(self, directory_path: Path):
         if directory_path.exists() and directory_path.is_dir():
             shutil.rmtree(directory_path)
             self.logger.info(
@@ -88,7 +88,7 @@ class FilesMngr(metaclass=SingletonMeta):
         else:
             self.logger.warning(f"Directory {directory_path} does not exist.\n")
 
-    def load_examples_from_json(self, filepath: Path) -> List[ExampleEntry]:
+    def loadExamplesFromJson(self, filepath: Path) -> List[ExampleEntry]:
         if not filepath.exists():
             self.logger.warning(
                 f"JSON file not found at '{filepath}'. Returning empty list."
