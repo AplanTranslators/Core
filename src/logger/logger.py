@@ -190,7 +190,7 @@ class Logger:
     def __init__(self, name):
         self.active = True
         self.instance = logging.getLogger(name)
-        self.instance.setLevel(logging.INFO)
+        self.instance.setLevel(logging.DEBUG)
 
         console_handler = logging.StreamHandler()
 
@@ -320,7 +320,7 @@ class AplanLogger(metaclass=SingletonMeta):
 
         self.instance = logging.getLogger(self.__class__.__qualname__)
         self.instance.propagate = False
-        self.instance.setLevel(logging.INFO)
+        self.instance.setLevel(logging.DEBUG)
 
         # Перевірка, щоб уникнути повторного додавання хендлерів
         if not self.instance.handlers:
