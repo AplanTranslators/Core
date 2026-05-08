@@ -1,12 +1,6 @@
 """
 Unit tests for Program.
 
-Design rules:
-- No mocking — all tests use real class instances.
-- Atomic — one test, one behaviour.
-- No multiple unrelated assertions per test.
-- Full branch / line coverage of program.py.
-
 Singleton isolation: Program is a singleton (SingletonMeta). Each test that
 needs a clean Program instance must reset the singleton registry before
 construction. A module-level fixture `reset_program` handles this by removing
