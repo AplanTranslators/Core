@@ -1,6 +1,6 @@
 # Core Translator
 
-## Version 1.0.0 Unstable
+## Version 0.2 Unstable
 
 This is an application includes tools and basic structures for generating Aplan Files.
 

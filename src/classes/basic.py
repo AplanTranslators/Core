@@ -441,3 +441,18 @@ class BasicArray:
             f"BasicArray(element_type={self.element_type.__name__}, count={len(self.elements)}):\n"
             f"[\n{elements_repr}\n]"
         )
+
+    def addElements(self, new_elements: "BasicArray") -> int:
+        """
+        Adds multiple elements from another BasicArray to this array.
+
+        Args:
+            new_elements (BasicArray): The BasicArray containing elements to add.
+
+        Returns:
+            int: The index of the last added element.
+        """
+        last_index = -1
+        for element in new_elements.elements:
+            last_index = self.addElement(element)
+        return last_index
