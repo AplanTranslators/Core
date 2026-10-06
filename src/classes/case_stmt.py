@@ -1,4 +1,6 @@
 from typing import Optional, Tuple
+
+from ..classes.node import NodeArray
 from ..classes.element_types import ElementsTypes
 from ..classes.structure import Structure
 
@@ -40,7 +42,8 @@ class CaseStmt(Structure):
         # The expression that the case statement evaluates.
         # This is typed as a specific ANTLR4 parser context, allowing direct access
         # to the parsed syntax tree node for the expression.
-        self.expression = None
+        self.expr_ctx = None
+        self.expr_parsed: NodeArray = NodeArray(ElementsTypes.PRECONDITION_ELEMENT)
         # 'init_case_count' stores the initial or total number of case items.
         self.init_case_count: int = 0
         # 'case_count' can be used as a mutable counter, perhaps for tracking
@@ -70,7 +73,8 @@ class CaseStmt(Structure):
         # It's been removed to avoid AttributeError.
         return (
             f"\tCaseStmt(identifier={self.identifier!r}, "
-            f"expression={self.expression!r}, "
+            f"expr_ctx={self.expr_ctx!r}, "
+            f"expr_parsed={self.expr_parsed!r}, "
             f"init_case_count={self.init_case_count!r}, "
             f"case_count={self.case_count!r}, "
             f"sequence={getattr(self, 'sequence', 'N/A')!r})\n"
